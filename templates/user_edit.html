@@ -15,8 +15,8 @@
 
     <form action="{{ url_for('user.edit', user_id=user.id) }}" method="post">
         <label>名前: <input type="text" name="name" value="{{ user.name }}" required></label><br>
-        <label>会員番号:<input type="text" name="id" value="{{ user.id }}" required></label><br>
-        <label>登録日: <input type="date" name="age" value="{{ user.date }}" pattern="\d{4}-\d{2}-\d{2}" required></label><br>
+        <label>会員番号:<input type="text" name="number" value="{{ user.number }}" required></label><br>
+        <label>登録日: <input type="date" name="date" value="{{ user.date }}" pattern="\d{4}-\d{2}-\d{2}" required></label><br>
         
         <button type="submit">保存</button>
     </form>
