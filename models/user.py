@@ -4,7 +4,7 @@ from .db import db
 class User(Model):
     name = CharField()
     number = IntegerField()
-    date = DateField()
+    date =DateField()
 
     class Meta:
         database = db
