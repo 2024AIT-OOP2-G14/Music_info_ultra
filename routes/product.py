@@ -8,7 +8,7 @@ product_bp = Blueprint('product', __name__, url_prefix='/products')
 @product_bp.route('/')
 def list():
     products = Product.select()
-    return render_template('product_list.html', title='CDアルバム一覧', items=products)
+    return render_template('product_list.html', title='アルバムリスト', items=products)
 
 
 @product_bp.route('/add', methods=['GET', 'POST'])
