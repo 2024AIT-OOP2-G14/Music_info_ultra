@@ -21,7 +21,7 @@ def add():
         name = request.form['name']
         number = request.form['number']
         date = request.form['date']
-        User.create(name=name, number=number)
+        User.create(name=name, number=number, date=date)
         return redirect(url_for('user.list'))
     
     return render_template('user_add.html')
