@@ -7,10 +7,7 @@ user_bp = Blueprint('user', __name__, url_prefix='/users')
 
 @user_bp.route('/')
 def list():
-    
-    # データ取得
     users = User.select()
-
     return render_template('user_list.html', title='会員一覧', items=users)
 
 
