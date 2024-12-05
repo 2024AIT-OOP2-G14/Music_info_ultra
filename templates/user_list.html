@@ -9,16 +9,17 @@
     <h1>{{ title }}</h1>
     <ul class="breadcrumb">
         <li><a href="{{ url_for('index') }}">HOME</a></li>
-        <li><a href="{{ url_for('user.list') }}">ユーザー一覧</a></li>
+        <li><a href="{{ url_for('user.list') }}">会員一覧</a></li>
     </ul>
 
-    <a href="{{ url_for('user.add') }}">新規ユーザー追加</a>
+    <a href="{{ url_for('user.add') }}">新規会員追加</a>
     <table>
         <thead>
             <tr>
                 <th>&nbsp;</th>
                 <th>名前</th>
-                <th>年齢</th>
+                <th>会員番号<th>
+                <th>登録日</th>
             </tr>
         </thead>
         <tbody>
@@ -26,7 +27,8 @@
             <tr>
                 <td><a href="{{ url_for('user.edit', user_id=user.id) }}">編集</a></td>
                 <td>{{ user.name }}</td>
-                <td>{{ user.age }}</td>
+                <td>{{ user.number }}</td>
+                <td>{{ user.date }}</td>
             </tr>
             {% endfor %}
         </tbody>
