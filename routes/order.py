@@ -7,6 +7,7 @@ order_bp = Blueprint('order', __name__, url_prefix='/orders')
 
 #
 #   貸し出し一覧
+# 
 #
 
 @order_bp.route('/')
@@ -22,6 +23,12 @@ def add():
         product_id = request.form['product_id']
         order_date = datetime.now()
         Order.create(user=user_id, product=product_id, order_date=order_date)
+        
+        print("-------",user_id,"-------")
+        print("-------",product_id,"-------")
+        print("-------",order_date,"-------")
+        
+        
         return redirect(url_for('order.list'))
     
     users = User.select()

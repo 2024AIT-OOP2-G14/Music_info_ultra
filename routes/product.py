@@ -21,8 +21,10 @@ def add():
     # POSTで送られてきたデータは登録
     if request.method == 'POST':
         
-        # 
+        # アルバム名
         name = request.form['name']
+        
+        # 価格
         price = request.form['price']
         Product.create(name=name, price=price)
         return redirect(url_for('product.list'))
