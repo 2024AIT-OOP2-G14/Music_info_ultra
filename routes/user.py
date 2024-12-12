@@ -4,6 +4,11 @@ from models import User
 # Blueprintの作成
 user_bp = Blueprint('user', __name__, url_prefix='/users')
 
+# 
+#   会員データ一覧
+#
+
+
 
 @user_bp.route('/')
 def list():
