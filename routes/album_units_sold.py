@@ -31,3 +31,4 @@ def ranking_chart():
     img.seek(0)
     plt.close()
     return send_file(img, mimetype='image/png')
+
