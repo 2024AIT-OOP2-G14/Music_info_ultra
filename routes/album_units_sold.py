@@ -1,18 +1,19 @@
 from flask import Blueprint, send_file
-from models import Order, User, Product
+from models import Order, Product
 import matplotlib.pyplot as plt
 import io
 
 
 orders = Order.select()
 for order in orders:
-    print(order.user, order.product, order.order_date)
+    print(Product.get(order.product).name, order.order_date)
     
 # Blueprintの作成
-product_bp = Blueprint('product', __name__, url_prefix='/products')
+album_units_sold_bp = Blueprint('product', __name__, url_prefix='/products')
+
 
 # 円グラフ画像生成ルート
-@product_bp.route('/ranking-chart.png')
+@album_units_sold_bp.route('/ranking-chart.png')
 def ranking_chart():
     ranking_data = get_ranking_data()  # ランキングデータを取得
     labels = list(ranking_data.keys())[:5]  # 上位5つを取得
