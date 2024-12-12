@@ -11,19 +11,10 @@
       <li><a href="{{ url_for('user.list') }}">会員データリスト</a></li>
       <li><a href="{{ url_for('product.list') }}">アルバムリスト</a></li>
       <li><a href="{{ url_for('order.list') }}">アルバム貸し出しリスト</a></li>
-      <tbody>
-      <div>
-        <li>人気アルバムランキング</li>
-        <olclass="test1">
-        <li>一位：{{ product.rank1 }}</li>
-        
-        <li>二位：{{ product.rank2 }}</li>
-        
-        <li>三位：{{ product.rank3 }}</li>
-        
-        </ol>
-        </div>
-      </tbody>
     </ul>
+    <h2>人気アルバムランキング</h2>
+    <div>
+        <img src="{{ url_for('ranking_chart') }}" alt="人気アルバムランキング円グラフ">
+    </div>
 </body>
 </html>
