@@ -4,6 +4,10 @@ from models import Product
 # Blueprintの作成
 product_bp = Blueprint('product', __name__, url_prefix='/products')
 
+#
+#   アルバムリスト一覧
+#
+
 
 @product_bp.route('/')
 def list():
@@ -16,6 +20,8 @@ def add():
     
     # POSTで送られてきたデータは登録
     if request.method == 'POST':
+        
+        # 
         name = request.form['name']
         price = request.form['price']
         Product.create(name=name, price=price)
