@@ -16,10 +16,11 @@ for blueprint in blueprints:
 @app.route('/')
 def index():
     user_data = get_user_summary()
+    #デバック用print
     print("--------------------------------")
     print(user_data)
 
     return render_template('index.html', chart_data=user_data)
 
 if __name__ == '__main__':
-    app.run(port=8057, debug=True)
+    app.run(port=8080, debug=True)
