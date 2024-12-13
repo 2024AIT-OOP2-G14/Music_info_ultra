@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from models import initialize_database
 from routes import blueprints
+from routes.mmc import get_user_summary
 
 app = Flask(__name__)
 
@@ -14,7 +15,11 @@ for blueprint in blueprints:
 # ホームページのルート
 @app.route('/')
 def index():
-    return render_template('index.html')
+    user_data = get_user_summary()
+    print("--------------------------------")
+    print(user_data)
+
+    return render_template('index.html', chart_data=user_data)
 
 if __name__ == '__main__':
-    app.run(port=8080, debug=True)
+    app.run(port=8057, debug=True)

@@ -2,15 +2,92 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>データ一覧</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* キャンバスの高さを調整 */
+        #purchaseChart {
+            max-height: 600px; /* 必要に応じて調整 */
+        }
+    </style>
 </head>
 <body>
-    <h1>アルバム貸し出し管理アプリ</h1>
+    <h1>index</h1>
     <ul>
-      <li><a href="{{ url_for('user.list') }}">会員データリスト</a></li>
-      <li><a href="{{ url_for('product.list') }}">アルバムリスト</a></li>
-      <li><a href="{{ url_for('order.list') }}">アルバム貸し出しリスト</a></li>
+        <li><a href="{{ url_for('user.list') }}">ユーザーリスト</a></li>
+        <li><a href="{{ url_for('product.list') }}">製品リスト</a></li>
+        <li><a href="{{ url_for('order.list') }}">注文リスト</a></li>
     </ul>
+    
+    <h1>アルバム貸し出し管理アプリ</h1>
+    <h2>購入統計グラフ</h2>
+    <canvas id="purchaseChart" width="400" height="300"></canvas>
+
+    
+    <script>
+        // Pythonから渡されたデータを埋め込む
+        const chartData = {{ chart_data | tojson }};
+
+
+        // ユーザー名と購入金額を抽出
+        const labels = chartData.map(item => item.user);
+        const data = chartData.map(item => item.total_amount);
+
+        // グラフを描画
+        const ctx = document.getElementById('purchaseChart').getContext('2d');
+        const purchaseChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '購入金額（円）',
+                    data: data,
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y', // 横棒グラフ
+                maintainAspectRatio: false, // グラフの高さを自動調整
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                // 値をフォーマット（例: 10,000のようにカンマ区切り）
+                                return value.toLocaleString();
+                            }
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            font: {
+                                size: 10 // ラベルのフォントサイズを小さくする
+                            }
+                        }
+                    }
+                },
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                // ツールチップの値をフォーマット
+                                return tooltipItem.raw.toLocaleString() + ' 円';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

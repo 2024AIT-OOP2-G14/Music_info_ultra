@@ -1,43 +1,26 @@
-from flask import Blueprint, render_template, request, redirect, url_for
-from models import Order, User, Product
+from flask import Blueprint, render_template, jsonify
+from models import User, Product, Order
+from peewee import fn
 
+mmc_bp = Blueprint('mmc', __name__, template_folder='templates')
 
-# Blueprintの作成
-mmcgraph_bp = Blueprint('mmc_graph', __name__, url_prefix='http://127.0.0.1:8080/')
+def get_user_summary():
+    user_total = (
+        Order
+        .select(
+            Order.user_id.alias('user_id'),  # ユーザーIDの取得
+            fn.SUM(Product.price).alias('total')
+        )
+        .join(Product)
+        .group_by(Order.user_id)
+        .order_by(fn.SUM(Product.price).desc())
+    )
 
-print("test")
-
-# productID と userID のデータが必要
-
-@mmcgraph_bp.route(methods=['GET', 'POST'])
-def add():
-    if request.method == 'POST':
-        user_id = request.form['name']
-        
-        # modelsから価格を変数に代入
-        money = request.form['price']
-        
-        print("--=====",money,"--=====")
-        
-        Order.create(user=user_id, money = money)
-        
-        return redirect(url_for('order.list'))
-    users = User.select()
-    moneys = Product.select()
-    return render_template('order_add.html', users=users, products=moneys)
-
-# @order_bp.route('/edit/<int:order_id>', methods=['GET', 'POST'])
-# def edit(order_id):
-#     order = Order.get_or_none(Order.id == order_id)
-#     if not order:
-#         return redirect(url_for('order.list'))
-
-#     if request.method == 'POST':
-#         order.user = request.form['user_id']
-#         order.product = request.form['product_id']
-#         order.save()
-#         return redirect(url_for('order.list'))
-
-#     users = User.select()
-#     products = Product.select()
-#     return render_template('order_edit.html', order=order, users=users, products=products)
+    user_data = [
+        {
+            'user': User.get(User.id == purchase.user_id).name,  # ユーザー名の取得
+            'total_amount': purchase.total
+        } for purchase in user_total
+    ]
+    # print("--------------------------------")
+    return user_data
