@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from models import User
 from models import register_chart
+import datetime
 
 register_bp = Blueprint('index', __name__, url_prefix='/')
 
@@ -8,6 +9,25 @@ register_bp = Blueprint('index', __name__, url_prefix='/')
 def register():
     print('a')
     users = User.select()
-    print(users)
+    userDate = [user.date for user in users]    #登録日のdatetime.dateリスト
+
+    userDate_list = []  #登録日のintリスト
+
+    for user in userDate:
+        userDate_list.append( str(user)[:7].split('-') )
+    
+    print(userDate_list)
+    
+    thisYear = str(datetime.datetime.now().year)
+
+    regi_Transition = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+    for d in userDate_list:
+        if d[0] == thisYear:
+            for i in range(0,12):
+                if int(d[1])-1 == i:
+                    regi_Transition[i] += 1
+    
+    print(regi_Transition)
     
     return render_template('index.html', items=users)
