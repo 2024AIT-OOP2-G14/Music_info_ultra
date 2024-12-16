@@ -14,14 +14,13 @@
     </style>
 </head>
 <body>
-    <h1>index</h1>
+    <h1>アルバム貸し出し管理アプリ</h1>
     <ul>
-        <li><a href="{{ url_for('user.list') }}">ユーザーリスト</a></li>
-        <li><a href="{{ url_for('product.list') }}">製品リスト</a></li>
-        <li><a href="{{ url_for('order.list') }}">注文リスト</a></li>
+        <li><a href="{{ url_for('user.list') }}">会員データリスト</a></li>
+        <li><a href="{{ url_for('product.list') }}">アルバムリスト</a></li>
+        <li><a href="{{ url_for('order.list') }}">アルバム貸し出しリスト</a></li>
     </ul>
     
-    <h1>アルバム貸し出し管理アプリ</h1>
     <h2>購入統計グラフ</h2>
     <canvas id="purchaseChart" width="400" height="300"></canvas>
 
