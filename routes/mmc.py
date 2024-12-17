@@ -14,7 +14,7 @@ def get_user_summary():
         .join(Product)
         .group_by(Order.user_id)
         .order_by(fn.SUM(Product.price).desc())
-    )
+    )  # ここでトータルの計算
 
     user_data = [
         {
