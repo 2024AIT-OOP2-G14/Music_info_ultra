@@ -1,11 +1,11 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template,json,request, redirect, url_for,jsonify
 from models import User
 from models import register_chart
 import datetime
 
 register_bp = Blueprint('index', __name__, url_prefix='/')
 
-@register_bp.route('/')
+@register_bp.route('/get_data', methods=['GET'])
 def register():
     print('a')
     users = User.select()
@@ -27,7 +27,5 @@ def register():
             for i in range(0,12):
                 if int(d[1])-1 == i:
                     regi_Transition[i] += 1
-    
-    print(regi_Transition)
-    
-    return render_template('index.html', items=users)
+
+    return jsonify(regi_Transition)
