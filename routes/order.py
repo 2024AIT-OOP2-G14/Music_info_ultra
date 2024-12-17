@@ -5,6 +5,9 @@ from datetime import datetime
 # Blueprintの作成
 order_bp = Blueprint('order', __name__, url_prefix='/orders')
 
+#
+#   貸し出し一覧
+#
 
 @order_bp.route('/')
 def list():

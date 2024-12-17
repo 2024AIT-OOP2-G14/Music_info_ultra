@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>データ一覧</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* キャンバスの高さを調整 */
@@ -12,6 +13,10 @@
             max-height: 600px; /* 必要に応じて調整 */
         }
     </style>
+
+  <!-- chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
 </head>
 <body>
     <h1>アルバム貸し出し管理アプリ</h1>
@@ -20,7 +25,7 @@
         <li><a href="{{ url_for('product.list') }}">アルバムリスト</a></li>
         <li><a href="{{ url_for('order.list') }}">アルバム貸し出しリスト</a></li>
     </ul>
-    
+
     <h2>購入統計グラフ</h2>
     <canvas id="purchaseChart" width="400" height="300"></canvas>
 
@@ -89,5 +94,48 @@
             }
         });
     </script>
+  
+    <h2>人気アルバムランキング</h2>
+    <h3>会員登録の年間推移</h3>
+
+    <!-- chart.js -->
+    <canvas id="myChart"></canvas>
+
+    <script>
+        fetch('/get_data')
+            .then(response => response.json())
+            .then(data => {   
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: [...Array(12).keys()].map((_, i)=> "2024-"+(i+1)),
+                        datasets: [{
+                            label: '月間登録人数',
+                            borderColor: 'rgb(85, 210, 255)',
+                            backgroundColor: "rgba(0,0,0,0)",
+                            data:data,
+                            tension:0
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [
+                                {
+                                    ticks: {
+                                        stepSize: 1,
+                                    },
+                                }
+                            ]
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+  
+    <div>
+      
+    </div>
 </body>
 </html>
