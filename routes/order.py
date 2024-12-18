@@ -21,7 +21,12 @@ def add():
         user_id = request.form['user_id']
         product_id = request.form['product_id']
         order_date = datetime.now()
+        
+        #print("--=====",user_id,"--=====")
+        
         Order.create(user=user_id, product=product_id, order_date=order_date)
+        
+        
         return redirect(url_for('order.list'))
     
     users = User.select()
