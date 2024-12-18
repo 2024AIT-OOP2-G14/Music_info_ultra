@@ -2,7 +2,6 @@ from .register_chart import register_bp
 from .user import user_bp
 from .product import product_bp
 from .order import order_bp
-
 from .mmc import mmc_bp
 #from .album_units_sold import album_units_sold_bp
 from .album_units_sold import ranking_bp  # すでに import 済み
